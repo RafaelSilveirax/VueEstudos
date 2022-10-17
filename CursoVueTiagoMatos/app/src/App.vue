@@ -1,6 +1,5 @@
 <template>
 
-
     <h1 :class="{'title' : true, 'title-home' : ishome}">
       Curso Vue 3 
     </h1>
@@ -43,6 +42,18 @@
       </div>
     </div>
 
+    <br>
+    Eventos
+    <br>
+
+    <button @click="onClickFun()">
+      Enviar
+    </button>
+
+    <div @mouseover="onMouseOver()">
+      Mouser over
+    </div>
+
     
     
     <p :class="['text', 'title']">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
@@ -58,9 +69,29 @@
       <span>{{index}}</span> - {{obj.title}}
     </div>
 
-    <TheHeader
+    <!-- <TheHeader
       v-if="showHeader"
-    />
+    /> -->
+
+    <!-- Componente Slot -->
+    <TheHeader> 
+
+      <template v-slot:title>
+        home
+      </template>
+
+      <template v-slot:description>
+        <p>AAASD</p>
+      </template>
+
+    </TheHeader>
+
+    <input type="text"
+    v-model="name">
+
+    <button @click="showHeader = !showHeader">
+      Toggle
+    </button>
 
     <div v-show="showName">
       Nome: {{name}}
@@ -74,7 +105,74 @@
       alt="Vue logo" 
       src="./assets/logo.png"
     >
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+    Aula 10
+
+    <div>
+        {{ fullName }} <br> <br>
+
+        <h2>Todos em aberto</h2>
+        <div
+            v-for="todo in uncompletedTodos"
+            :key="todo.id"
+        >
+            {{ todo.title }}
+        </div>
+
+        <h2>Todos completas</h2>
+        <div
+            v-for="todo in completedTodos"
+            :key="todo.id"
+        >
+            {{ todo.title }}
+        </div>
+
+        <br>
+
+        <h2>Todos</h2>
+        <div
+            v-for="todo in todos"
+            :key="todo.id"
+        >
+            <input
+                v-model="todo.completed"
+                type="checkbox"
+            >
+            {{ todo.title }}
+        </div>
+    </div>
+
+    <br>
+
+    <div>
+      <input v-model="name2" type="text">
+    </div>
+
+    {{name2}}
+
+    <br> <br>
+
+    <div>
+      <input v-model="user2.first_name" type="text">
+    </div>
+    <div>
+      <input v-model="user2.last_name" type="text">
+    </div>
+
+    {{user2.first_name}} {{user2.last_name}}
+
+    <br> <br>
+
+    <select name="" id="" v-model="pageCount">
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="15">15</option>
+    </select>
+    
+    <br>
+
+    {{pageCount}}
+
     
 </template>
 
@@ -90,6 +188,8 @@ export default {
     return{
       showHeader: true,
       name: 'eu te amo',
+      name2:'',
+      pageCount: 5,
       showName: false,
       accessLevel: 'admin',
       classVar: "title",
@@ -99,6 +199,14 @@ export default {
       sports:'',
       newsletter: '',
       colors:[],
+      user: {
+        first_name: 'Jon',
+        last_name: 'Snow',
+      },
+      user2:{
+        first_name: '',
+        last_name: '',
+      },
       todos:[
         {
           "userId": 1,
@@ -134,7 +242,97 @@ export default {
         }
       ]
     }
-  }
+  },
+  computed: {
+        fullName() {
+            return `${this.user.first_name} ${this.user.last_name}`
+        },
+        uncompletedTodos() {
+            return this.todos.filter(todo => !todo.completed);
+        },
+        completedTodos() {
+            return this.todos.filter(todo => todo.completed)
+        },
+    },
+  methods:{
+    onClickFun(){
+      alert("Opa")
+    },
+   /*  onMouseOver(){
+      alert("Epa")
+    }, */
+    saveUserName(){
+      console.log(this.name2)
+    },
+    changePage(){
+      console.log('Ajax changePage')
+    }
+  },
+  watch: {
+    name2(newValue){
+      if(newValue.length >= 3){
+        this.saveUserName()
+      }
+    },
+    pageCount(){
+      this.changePage();
+    },
+    user2: {
+      handler(){
+        console.log("user alterado");
+      },
+      deep: true //quando qualquer coisa dentro do objeto se alterar
+    }
+  },
+
+  //Criação
+    //Preparar o componente
+    //Ajax, inicialzar alguma variaveis
+    //Nao tem acesso a dom
+  //Motagem
+    //Inicializar um lib externa
+    //Precisa de acesso ao DOm
+    //Tem acesso ao Dom
+  //Atualização
+    //Debug
+    //Udpade
+  //Desmontagem
+    //Remover tudo oque for necessario (lib->destroy())
+    //Para liberar memoria.
+
+  //Hooks
+/*   beforeUpdate(){
+    console.log("beforeUpdate");
+  },
+  updated(){
+    console.log("updated");
+  },
+  beforeCreate(){
+    console.log('beforeCreate');
+    console.log('Estado:', this.name);
+    console.log('DOM:', this.$el);
+  },
+  created(){
+    console.log('created');
+    console.log('Estado:', this.name);
+    console.log('DOM:', this.$el);
+  },
+  beforeMount(){
+    console.log('beforeMount');
+    console.log('Estado:', this.name);
+    console.log('DOM:', this.$el);
+  },
+  mounted(){
+    console.log('mounted');
+    console.log('Estado:', this.name);
+    console.log('DOM:', this.$el);
+  },
+  beforeUnmount(){
+    console.log('beforeUnmount');
+  },
+  unmounted(){
+    console.log('unmounted');
+  } */
 }
 </script>
 
@@ -160,6 +358,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  background: grey;
 }
 
 </style>
