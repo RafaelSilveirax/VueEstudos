@@ -173,17 +173,23 @@
 
     {{pageCount}}
 
-    
+    <BaseAlert/>
+   <!--  <BaseAlert :variant="variant" :textAlert="textAlert"/> -->
+    <BaseAlert :variant="variant"/>
+    <BaseAlert variant="fail"/>
+  
 </template>
 
 <script>
 import TheHeader from './components/TheHeader.vue'
+import BaseAlert from './components/BaseAlert.vue';
 
 export default {
   name: 'App',
   components: {
-    TheHeader
-  },
+    TheHeader,
+    BaseAlert
+},
   data(){
     return{
       showHeader: true,
@@ -207,6 +213,8 @@ export default {
         first_name: '',
         last_name: '',
       },
+      variant: "sucess",
+      textAlert: "Seu form foi enviado ",
       todos:[
         {
           "userId": 1,
