@@ -11,6 +11,8 @@
         {{baseText}}
         <br>
         {{test}}
+
+        <button @click="onClick()">X</button>
     </div>
 </template>
 
@@ -24,13 +26,9 @@
                 type: String,
                 default: ''
             },
-          /*   textAlert:{
+            textAlert:{
                 type: String,
                 default: ''
-            }, */
-            test:{
-                type: String,
-                default: 'test'
             },
         },
         computed:{
@@ -46,6 +44,12 @@
                 (this.variant === "sucess" ? "Sucesso enviado" : "Error no envio") :
                 'Sem dados'       
             },
+        },
+        methods:{
+            onClick(){
+                this.$emit('close')
+                console.log("clicou")
+            }
         }
     }
 
@@ -53,6 +57,8 @@
 
 <style scoped>
     .alert{
+        display: flex;
+        justify-content: center;
         padding: 5px;
         border-radius: 6px;
         color: gray;

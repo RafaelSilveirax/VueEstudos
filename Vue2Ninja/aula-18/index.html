@@ -1,0 +1,74 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 18</title>
+</head>
+<body>
+    
+    <div id="app">
+        <div>
+            <h1>{{titulo}}</h1> 
+            <button @click.stop.prevent="getUsers()">SUBMIT</button>
+
+            <div v-if="response.status == false">{{response.msg}}</div>
+
+            <div v-if="loader.users">Carregando Users</div>
+
+            <ul>
+                <li v-for=" user in users">
+                    {{user.name}}
+                </li>
+            </ul>
+        </div>
+       
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.3"></script>
+
+    <script>
+
+        var mixin = {
+            methods:{
+                getUsers(){
+                    this.loader.users = true;
+                    var url = "http://jsonplaceholder.typicode.com/users"
+                    this.$http.get(url)
+                    .then((r) =>{
+                        this.users = r.body
+                        this.response.status = true;
+                    }, (error) => {
+                        this.response.status = false;
+                    }).finally(()=>{
+                        this.loader.users = false;
+                    });
+                }
+            }
+        }
+
+        var app = new Vue({
+            el: "#app",
+            mixins: [mixin],
+            data:{   
+                titulo: "Aula 18 vue Js",
+                users: [],
+                loader:{
+                    users: false,
+                },
+                response: {
+                    msg: "Error ao connctar",
+                    status: true,
+                },
+            }, 
+
+        })
+
+    </script>
+
+</body>
+</html>

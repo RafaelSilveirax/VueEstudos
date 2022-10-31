@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 11</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2" ></script>
+
+    <div id="app">
+       <h1>{{titulo}}</h1> 
+       <menu-bar></menu-bar>
+    </div>
+
+    <template id="menu">
+        <ul>
+            <li>Item 1</li> 
+            <li>Item 2</li>
+        </ul>
+        <br>
+        <opa-menu></opa-menu>
+    </template>
+    
+    <template id="opa-menu">
+      <div>
+        <h1>OPA</h1>
+      </div>
+    </template>
+
+   
+
+    <script>
+        Vue.component('menu-bar',{
+            template: "#menu"
+        });
+
+        Vue.component('opa-menu',{
+            template: "#opa-menu"
+        });
+
+        var app = new Vue({
+            el: "#app",
+            data:{
+                titulo: "Aula 11 vue Js"
+            }
+
+        })
+
+
+        
+    </script>
+
+</body>
+</html>

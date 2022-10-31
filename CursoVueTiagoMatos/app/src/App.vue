@@ -173,10 +173,10 @@
 
     {{pageCount}}
 
-    <BaseAlert/>
+    <BaseAlert @close="onClose()" v-if="showAlert"/>
    <!--  <BaseAlert :variant="variant" :textAlert="textAlert"/> -->
-    <BaseAlert :variant="variant"/>
-    <BaseAlert variant="fail"/>
+    <BaseAlert :variant="variant"  @close="onClose()"  v-if="showAlert" />
+    <BaseAlert variant="fail"  @close="onClose()"  v-if="showAlert" />
   
 </template>
 
@@ -215,6 +215,7 @@ export default {
       },
       variant: "sucess",
       textAlert: "Seu form foi enviado ",
+      showAlert: true,
       todos:[
         {
           "userId": 1,
@@ -274,6 +275,9 @@ export default {
     },
     changePage(){
       console.log('Ajax changePage')
+    },
+    onClose(){
+      this.showAlert = false
     }
   },
   watch: {
